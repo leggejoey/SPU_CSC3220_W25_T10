@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.4.15 on Mon Feb 17 14:59:22 2025
+-- File generated with SQLiteStudio v3.4.15 on Mon Feb 17 15:08:28 2025
 --
 -- Text encoding used: System
 --
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS audioPlayer (
     length     NUMERIC NOT NULL,
     audio_data BLOB    UNIQUE
                        NOT NULL
-                       PRIMARY KEY
+                       REFERENCES audioData (file_paths) 
 );
 
 
@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS textureMap (
     width      NUMERIC NOT NULL,
     height     NUMERIC NOT NULL,
     image_data BLOB    UNIQUE
-                       PRIMARY KEY
                        NOT NULL
+                       REFERENCES imageData (file_paths) 
 );
 
 
