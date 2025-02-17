@@ -1,0 +1,14 @@
+insert into scene(scene_id, date_created, name, config)
+values(1, '2/16/25', 'test', 'placeholder Blob');
+select * from scene;
+update scene
+set date_created = 'temp time'
+where scene_id = 1;
+insert into scene(scene_id, date_created, name, config, entity)
+values(0, 'temp time2', 'test2', 'placeholder Blob2', 'test entity');
+insert into entity(ID, time_created)
+values(0, 'temp time');
+select ID, time_created from entity;
+delete from scene where scene_id = 1;
+delete from entity where ID = 0;
+delete from scene where scene_id = 0;
