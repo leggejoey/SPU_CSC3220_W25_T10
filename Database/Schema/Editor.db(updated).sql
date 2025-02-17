@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.4.15 on Sun Feb 16 16:02:38 2025
+-- File generated with SQLiteStudio v3.4.15 on Mon Feb 17 14:59:22 2025
 --
 -- Text encoding used: System
 --
@@ -10,9 +10,10 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS audioData;
 
 CREATE TABLE IF NOT EXISTS audioData (
-    file_paths    BLOB UNIQUE
-                       NOT NULL,
-    audio_buffers      NOT NULL
+    file_paths    TEXT UNIQUE
+                       NOT NULL
+                       PRIMARY KEY,
+    audio_buffers BLOB
 );
 
 
@@ -22,8 +23,9 @@ DROP TABLE IF EXISTS audioPlayer;
 CREATE TABLE IF NOT EXISTS audioPlayer (
     speed      NUMERIC NOT NULL,
     length     NUMERIC NOT NULL,
-    audio_data         UNIQUE
+    audio_data BLOB    UNIQUE
                        NOT NULL
+                       PRIMARY KEY
 );
 
 
@@ -31,9 +33,9 @@ CREATE TABLE IF NOT EXISTS audioPlayer (
 DROP TABLE IF EXISTS components;
 
 CREATE TABLE IF NOT EXISTS components (
-    attributes,
-    Audio_player,
-    texture_map
+    attributes    PRIMARY KEY,
+    Audio_player  REFERENCES audioPlayer (speed),
+    texture_map   REFERENCES textureMap (width) 
 );
 
 
@@ -41,8 +43,11 @@ CREATE TABLE IF NOT EXISTS components (
 DROP TABLE IF EXISTS Editor;
 
 CREATE TABLE IF NOT EXISTS Editor (
-    Ui     REFERENCES UI (config),
-    Scene  REFERENCES scene (scene_id) 
+    Ui                REFERENCES UI (config),
+    Scene             REFERENCES scene (scene_id),
+    editor_id INTEGER UNIQUE
+                      PRIMARY KEY
+                      NOT NULL
 );
 
 
@@ -62,9 +67,10 @@ CREATE TABLE IF NOT EXISTS entity (
 DROP TABLE IF EXISTS imageData;
 
 CREATE TABLE IF NOT EXISTS imageData (
-    file_paths    BLOB UNIQUE
-                       NOT NULL,
-    image_buffers      NOT NULL
+    file_paths    TEXT UNIQUE
+                       NOT NULL
+                       PRIMARY KEY,
+    image_buffers BLOB
 );
 
 
@@ -78,7 +84,7 @@ CREATE TABLE IF NOT EXISTS scene (
     date_created TEXT    NOT NULL,
     name         TEXT    NOT NULL,
     config               NOT NULL,
-    entity
+    entity               REFERENCES entity (ID) 
 );
 
 
@@ -88,7 +94,8 @@ DROP TABLE IF EXISTS textureMap;
 CREATE TABLE IF NOT EXISTS textureMap (
     width      NUMERIC NOT NULL,
     height     NUMERIC NOT NULL,
-    image_data         UNIQUE
+    image_data BLOB    UNIQUE
+                       PRIMARY KEY
                        NOT NULL
 );
 
@@ -97,10 +104,13 @@ CREATE TABLE IF NOT EXISTS textureMap (
 DROP TABLE IF EXISTS UI;
 
 CREATE TABLE IF NOT EXISTS UI (
-    config       NOT NULL,
+    config              NOT NULL
+                        PRIMARY KEY,
     file_system,
     console,
-    windows
+    windows,
+    editor_id   INTEGER REFERENCES Editor (Ui) 
+                        NOT NULL
 );
 
 
