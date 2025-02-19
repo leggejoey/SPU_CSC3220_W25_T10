@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.4.15 on Mon Feb 17 15:08:28 2025
+-- File generated with SQLiteStudio v3.4.15 on Tue Feb 18 20:18:10 2025
 --
 -- Text encoding used: System
 --
@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS entity (
                          NOT NULL,
     time_created TEXT    NOT NULL,
     components           UNIQUE
+                         REFERENCES components (attributes) 
 );
 
 
