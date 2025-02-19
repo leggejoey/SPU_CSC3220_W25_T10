@@ -1,14 +1,33 @@
 insert into scene(scene_id, date_created, name, config)
-values(1, '2/16/25', 'test', 'placeholder Blob');
-select * from scene;
+values(1, '2/16/25', 'test2', 'placeholder2');
+select scene_id, date_created, name, config from scene;
+
 update scene
-set date_created = 'temp time'
+set date_created = 'temp time2'
 where scene_id = 1;
-insert into scene(scene_id, date_created, name, config, entity)
-values(0, 'temp time2', 'test2', 'placeholder Blob2', 'test entity');
+
 insert into entity(ID, time_created)
-values(0, 'temp time');
-select ID, time_created from entity;
+values(01, 'temp time');
+insert into scene(scene_id, date_created, name, config, entity)
+values(0, 'temp time', 'test', 'placeholder', 01);
+select * from scene;
+
+select date_created from scene join entity on entity.time_created = scene.date_created;
+
+insert into entity(ID, time_created)
+values(02, 'temp time2');
+update scene
+set entity = 02
+where scene_id = 1;
+select * from scene;
+
+update scene
+set entity = null
+where scene_id = 1;
+delete from entity where ID = 02;
+select * from scene;
+
 delete from scene where scene_id = 1;
-delete from entity where ID = 0;
+
 delete from scene where scene_id = 0;
+delete from entity where ID = 01;
