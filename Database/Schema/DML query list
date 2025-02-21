@@ -6,16 +6,16 @@ update scene
 set date_created = 'temp time2'
 where scene_id = 1;
 
-insert into entity(ID, time_created)
-values(01, 'temp time');
+insert into entity(ID, time_created, scene_id)
+values(01, 'temp time', 1);
 insert into scene(scene_id, date_created, name, config, entity)
 values(0, 'temp time', 'test', 'placeholder', 01);
 select * from scene;
 
 select date_created from scene join entity on entity.time_created = scene.date_created;
 
-insert into entity(ID, time_created)
-values(02, 'temp time2');
+insert into entity(ID, time_created, scene_id)
+values(02, 'temp time2', 1);
 update scene
 set entity = 02
 where scene_id = 1;
@@ -27,7 +27,8 @@ where scene_id = 1;
 delete from entity where ID = 02;
 select * from scene;
 
-delete from scene where scene_id = 1;
+select * from entity;
 
 delete from scene where scene_id = 0;
 delete from entity where ID = 01;
+delete from scene where scene_id = 1;
